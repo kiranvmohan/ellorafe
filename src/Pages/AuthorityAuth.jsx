@@ -7,6 +7,7 @@ import { loginApi, registerApi } from '../services/allApi'
 import { ToastContainer, toast } from 'react-toastify';
 
 function AuthorityAuth({ registerPage }) {
+  const [showPassword,setShowPassword] = useState(false)
 
   const isRegisterPage = registerPage ? true : false
   const navigate = useNavigate();
@@ -140,10 +141,15 @@ function AuthorityAuth({ registerPage }) {
                       className="form-control w-100 rounded mt-3"
                       onChange={(e) => setauthorityData({ ...authorityData, mobilenumber: e.target.value })}
                     />
-
-
-                    <input type='password'  value={authorityData.password} placeholder='Enter the password' className='form-control w-100 rounded mt-3'
+<div className='position-relative'>
+      <input type={showPassword?"text":"password"}  value={authorityData.password} placeholder='Enter the password' className='form-control w-100 rounded mt-3'
                       onChange={(e) => setauthorityData({ ...authorityData, password: e.target.value })} />
+                      <span onClick={()=>setShowPassword(!showPassword)} style={{position:"absolute",right:'15px',top:'60%',transform:'translateY(-50%)',cursor:"pointer",color:"#6c757d"}}>
+                        <i className={`fa-solid ${showPassword?"fa-eye-slash":"fa-eye"}`}></i>
+                      </span>
+</div>
+
+                
 
                     <button className='btn btn-primary mt-3 w-100' onClick={handleAuthregister}>Register as Authority</button>
 
@@ -161,8 +167,13 @@ function AuthorityAuth({ registerPage }) {
                   <>
                     <input type='text'value={authorityData.email} placeholder='Enter the email' className='form-control w-100 rounded mt-3'
                       onChange={(e) => setauthorityData({ ...authorityData, email: e.target.value })} />
-                    <input type='password' value={authorityData.password} placeholder='Enter the password' className='form-control w-100 rounded mt-3'
+                  <div className='position-relative'>
+      <input type={showPassword?"text":"password"}  value={authorityData.password} placeholder='Enter the password' className='form-control w-100 rounded mt-3'
                       onChange={(e) => setauthorityData({ ...authorityData, password: e.target.value })} />
+                      <span onClick={()=>setShowPassword(!showPassword)} style={{position:"absolute",right:'15px',top:'60%',transform:'translateY(-50%)',cursor:"pointer",color:"#6c757d"}}>
+                        <i className={`fa-solid ${showPassword?"fa-eye-slash":"fa-eye"}`}></i>
+                      </span>
+</div>
                        <button className='btn btn-primary mt-3 w-100' onClick={handleAuthLogin}>Log In</button>
 
 

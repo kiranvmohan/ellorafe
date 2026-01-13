@@ -9,6 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 function ResidentAuth({ registerPage }) {
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const isRegisterPage = registerPage ? true : false;
   const navigate = useNavigate()
   const [userData, setUserData] = useState({
@@ -63,25 +65,24 @@ function ResidentAuth({ registerPage }) {
 
     }
     else {
-      const result = await loginApi({ email, password,role:"resident"});
+      const result = await loginApi({ email, password, role: "resident" });
 
       console.log("Response from login");
       console.log(result.data)
-      
+
 
 
       if (result.status === 200) {
 
-        sessionStorage.setItem("existingUser",JSON.stringify(result.data.user_data))
-        sessionStorage.setItem("token",JSON.stringify(result.data.jwt_token))
-         sessionStorage.setItem("role", "resident");
+        sessionStorage.setItem("existingUser", JSON.stringify(result.data.user_data))
+        sessionStorage.setItem("token", JSON.stringify(result.data.jwt_token))
+        sessionStorage.setItem("role", "resident");
         navigate('/residentdash')
       }
-      else if (result.status === 406)
-      {
+      else if (result.status === 406) {
         toast.error("email or password mismatch")
       }
-      else{
+      else {
         toast.error(" Access denied")
       }
 
@@ -100,12 +101,12 @@ function ResidentAuth({ registerPage }) {
       email: "",
       mobilenumber: "",
       password: "",
-      role:"resident"
+      role: "resident"
 
 
     })
 
-  } ,[registerPage])
+  }, [registerPage])
 
   return (
     <>
@@ -146,9 +147,14 @@ function ResidentAuth({ registerPage }) {
                       <input type='text' value={userData.email} placeholder='Enter the email' className='form-control w-100 rounded mt-3'
                         onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
 
+                      <div className='position-relative'>
+                        <input type={showPassword?"text":"password"} value={userData.password} placeholder='Enter the password' className='form-control w-100 rounded mt-3'
+                          onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+                          <span onClick={()=> setShowPassword(!showPassword)} style= {{position:"absolute",right:'15px',top:'60%',transform:'translateY(-50%)',cursor:"pointer",color:"#6c757d"}}>
+                              <i className={`fa-solid ${showPassword?"fa-eye-slash":"fa-eye"}`}></i>
+                          </span>
+                      </div>
 
-                      <input type='password' value={userData.password} placeholder='Enter the password' className='form-control w-100 rounded mt-3'
-                        onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
                       <button className='btn btn-primary mt-3 w-100' onClick={handleRegister}>REGISTER</button>
                       <div>
                         <p className='mt-2'>Already a user? <Link to="/login/resident "> <span style={{ color: 'green' }}>LogIn</span></Link></p>
@@ -166,8 +172,13 @@ function ResidentAuth({ registerPage }) {
                       onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
 
 
-                      <input type='password' value={userData.password} placeholder='Enter the password' className='form-control w-100 rounded mt-3'
-                        onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+                      <div className='position-relative'>
+                        <input type={showPassword?"text":"password"} value={userData.password} placeholder='Enter the password' className='form-control w-100 rounded mt-3'
+                          onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+                          <span onClick={()=> setShowPassword(!showPassword)} style= {{position:"absolute",right:'15px',top:'60%',transform:'translateY(-50%)',cursor:"pointer",color:"#6c757d"}}>
+                              <i className={`fa-solid ${showPassword?"fa-eye-slash":"fa-eye"}`}></i>
+                          </span>
+                      </div>
 
                       <button className='btn btn-primary mt-3 w-100' onClick={handleLogin}>Log In</button>
                       <div>
