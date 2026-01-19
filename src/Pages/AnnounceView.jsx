@@ -14,7 +14,9 @@ function AnnounceView() {
     const viewAnnouncements = async()=>{
       try{
         const result = await announcementsApi()
-        setAnnounce(result.data)
+        if(result.status === 200){
+          setAnnounce(result.data)
+        }
       }
       catch(error){
         console.log("Error fetching announcements",error)
@@ -35,17 +37,20 @@ function AnnounceView() {
                       ( !announce || announce.length === 0) ? (
           <p className="text-muted text-center">No announcements yet</p>
         ) : (
-          announce.map((a, index) => (
-            <div key={index} className="list-group-item shadow-sm mb-2">
-              <h6 className="fw-bold">{a.title}</h6>
-              <p className="mb-1">{a.message}</p>
-              <div className="d-flex justify-content-between text-muted small">
-                <span>Category: {a.category}</span>
-                <span>Priority: {a.priority}</span>
-                <span>{a.date}</span>
-              </div>
+          announce.map(item=>(
+            <div className='card mb-3' key={item._id}> 
+            <div className='card-body'>
+              <h5 className='fw-bold'>{item.title}</h5>
+  <span className="badge bg-secondary me-2">{item.category}</span>
+              <span className="badge bg-warning text-dark">{item.priority}</span>
+              <p className='mt-2'>{item.message}</p>
+              <p className='text-muted small'>{new Date(item.date).toLocaleString()}</p>
+
             </div>
-          ))
+
+            </div>
+            ))
+       
         )
                     }
                 </div>
