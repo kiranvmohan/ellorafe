@@ -21,8 +21,8 @@ function AnnounceAuth() {
       return
     }
     try {
-      const result = await createAnnouncementApi(announcement)
-      toast.success("announcement published")
+       await createAnnouncementApi(announcement)
+      toast.success("Announcement published")
 
       setAnnouncement({
         title: "",
